@@ -49,22 +49,11 @@ userName.textContent = user.name;
 userImage.id = "user-image";
 userImage.src = user.image;
 
-console.log(activities[5].title);
-console.log(`${activities[5].weekly.current}hrs`);
-console.log(`Last week - ${activities[5].weekly.previous}hrs`);
-
-// Creating and appending user info area
-// const gridUserBack = document.createElement("div");
 const gridUser = document.querySelector("#grid-user");
-// gridUserBack.id = "grid-user-back";
-// gridUser.id = "grid-user";
-
 gridUser.append(userImage, "Report for", userName);
-// gridUserBack.append(gridUser);
-// grid.append(gridUserBack);
 
 // Creating and appending activities
-const dailyExtract = activities.map((e) => {
+const createActivities = activities.map((e) => {
   const gridElementBack = document.createElement("div");
   const gridElement = document.createElement("div");
   const title = document.createElement("h4");
@@ -80,8 +69,6 @@ const dailyExtract = activities.map((e) => {
     .toLowerCase()}.svg)`;
   title.textContent = e.title;
   ellipsis.src = "./images/icon-ellipsis.svg";
-  currentHrs.textContent = `${e.daily.current}hrs`;
-  previousHrs.textContent = `Yesterday - ${e.daily.previous}hrs`;
 
   grid.append(gridElementBack);
   gridElementBack.append(gridElement);
@@ -90,6 +77,46 @@ const dailyExtract = activities.map((e) => {
 
   return e.daily;
 });
-console.log(dailyExtract);
-console.log(dailyExtract[0]);
-console.log(dailyExtract[0].current);
+
+const daily = document.querySelector("#daily");
+const weekly = document.querySelector("#weekly");
+const monthly = document.querySelector("#monthly");
+
+const gridUpdate = (timeSpan) => {
+  const timeSpanExtract = activities.map((e) => {
+    const currentHrs = document.querySelector(
+      `#${e.title.replace(" ", "-").toLowerCase()} .grid-element h2`
+    );
+    const previousHrs = document.querySelector(
+      `#${e.title.replace(" ", "-").toLowerCase()} .grid-element p`
+    );
+    // daily.style.color = "var(--Desaturated-blue)";
+    // weekly.style.color = "var(--Desaturated-blue)";
+    // monthly.style.color = "var(--Desaturated-blue)";
+    if (timeSpan === "daily") {
+      currentHrs.textContent = `${e.daily.current}hrs`;
+      previousHrs.textContent = `Yesterday - ${e.daily.current}hrs`;
+      // daily.style.color = "white";
+    } else if (timeSpan === "weekly") {
+      currentHrs.textContent = `${e.weekly.current}hrs`;
+      previousHrs.textContent = `Last Week - ${e.weekly.current}hrs`;
+      // weekly.style.color = "white";
+    } else if (timeSpan === "monthly") {
+      currentHrs.textContent = `${e.monthly.current}hrs`;
+      previousHrs.textContent = `Last month - ${e.monthly.current}hrs`;
+      // monthly.style.color = "white";
+    }
+  });
+};
+
+gridUpdate("daily");
+
+daily.onclick = () => {
+  gridUpdate("daily");
+};
+weekly.onclick = () => {
+  gridUpdate("weekly");
+};
+monthly.onclick = () => {
+  gridUpdate("monthly");
+};

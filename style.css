@@ -31,8 +31,10 @@ body {
 }
 
 #grid {
-  width: 1110px;
+  max-width: 1110px;
+  /* width: 72vw; */
   height: 520px;
+  /* height: 71vh; */
   /* border: 2px solid red; */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -84,7 +86,7 @@ body {
   justify-content: space-between;
   background-color: var(--Dark-blue);
   border-radius: 18px;
-  height: 200px;
+  height: 83%;
   padding: 30px;
 }
 
@@ -171,4 +173,40 @@ h4 img {
 
 p {
   font-size: 15px;
+}
+
+@media screen and (max-width: 375px) {
+  body {
+    height: auto;
+    width: auto;
+  }
+  #grid {
+    /* display: flex;
+    flex-direction: column; */
+    grid-template-columns: 1fr;
+    height: auto;
+    width: 100%;
+
+    /* grid-template-columns: 1fr; */
+  }
+
+  #grid-user {
+    /* grid-row: 1fr; */
+  }
+
+  #timeframe {
+    display: flex;
+    justify-content: space-between;
+  }
+  h2 {
+    font-size: 32px;
+  }
+  .grid-element-back {
+    height: 160px;
+    /* max-width: 70vw; */
+  }
+
+  .grid-element {
+    height: 120px;
+  }
 }
