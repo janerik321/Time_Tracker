@@ -42,15 +42,17 @@ const user = {
   image: "./images/image-jeremy.png",
 };
 
+// Creating and appending user area
 const grid = document.querySelector("#grid");
 const userName = document.createElement("h3");
 const userImage = document.createElement("img");
+const reportName = document.createElement("div");
 userName.textContent = user.name;
-userImage.id = "user-image";
 userImage.src = user.image;
 
 const gridUser = document.querySelector("#grid-user");
-gridUser.append(userImage, "Report for", userName);
+reportName.append("Report for", userName);
+gridUser.append(userImage, reportName);
 
 // Creating and appending activities
 const createActivities = activities.map((e) => {
@@ -60,7 +62,9 @@ const createActivities = activities.map((e) => {
   const ellipsis = document.createElement("img");
   const currentHrs = document.createElement("h2");
   const previousHrs = document.createElement("p");
+  const allHrs = document.createElement("div");
 
+  allHrs.classList.add("hours");
   gridElement.classList.add("grid-element");
   gridElementBack.id = `${e.title.replace(" ", "-").toLowerCase()}`;
   gridElementBack.classList.add("grid-element-back");
@@ -72,45 +76,50 @@ const createActivities = activities.map((e) => {
 
   grid.append(gridElementBack);
   gridElementBack.append(gridElement);
-  gridElement.append(title, currentHrs, previousHrs);
+  gridElement.append(title, allHrs);
+  allHrs.append(currentHrs, previousHrs);
   title.append(ellipsis);
 
-  return e.daily;
+  return e.daily.current;
 });
 
 const daily = document.querySelector("#daily");
 const weekly = document.querySelector("#weekly");
 const monthly = document.querySelector("#monthly");
 
+// Gridupdate function to fill grid elements with values based on chosen time intervals
 const gridUpdate = (timeSpan) => {
-  const timeSpanExtract = activities.map((e) => {
+  activities.map((e) => {
     const currentHrs = document.querySelector(
       `#${e.title.replace(" ", "-").toLowerCase()} .grid-element h2`
     );
     const previousHrs = document.querySelector(
       `#${e.title.replace(" ", "-").toLowerCase()} .grid-element p`
     );
-    // daily.style.color = "var(--Desaturated-blue)";
-    // weekly.style.color = "var(--Desaturated-blue)";
-    // monthly.style.color = "var(--Desaturated-blue)";
+    daily.style.color = "";
+    weekly.style.color = "";
+    monthly.style.color = "";
     if (timeSpan === "daily") {
       currentHrs.textContent = `${e.daily.current}hrs`;
       previousHrs.textContent = `Yesterday - ${e.daily.current}hrs`;
-      // daily.style.color = "white";
+      daily.style.color = "white";
     } else if (timeSpan === "weekly") {
       currentHrs.textContent = `${e.weekly.current}hrs`;
       previousHrs.textContent = `Last Week - ${e.weekly.current}hrs`;
-      // weekly.style.color = "white";
+      weekly.style.color = "white";
     } else if (timeSpan === "monthly") {
       currentHrs.textContent = `${e.monthly.current}hrs`;
       previousHrs.textContent = `Last month - ${e.monthly.current}hrs`;
-      // monthly.style.color = "white";
+      monthly.style.color = "white";
     }
+    return e.title;
   });
 };
 
+// Run gridUpdate("daily") to fill grid elements with values
 gridUpdate("daily");
 
+// Run gridupdate function based on which time interval is clicked
 daily.onclick = () => {
   gridUpdate("daily");
 };
