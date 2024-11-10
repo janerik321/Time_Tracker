@@ -183,6 +183,10 @@ p {
 
 @media screen and (min-width: 375px) {
   @media screen and (max-width: 790px) {
+    body {
+      align-items: start;
+    }
+
     #grid {
       grid-template-columns: repeat(2, 1fr);
       height: auto;
@@ -209,8 +213,7 @@ p {
 
 @media screen and (max-width: 375px) {
   body {
-    height: auto;
-    width: auto;
+    align-items: start;
   }
   #grid {
     grid-template-columns: 1fr;
